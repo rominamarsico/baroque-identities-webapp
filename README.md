@@ -1,5 +1,5 @@
 # baroque-identities-webapp
-a university project at Hochschule Darmstadt, study Leadership in the Creative Industries<br>
+A university project at Hochschule Darmstadt, study Leadership in the Creative Industries.<br>
 
 https://baroque-identities.firebaseapp.com/
 
