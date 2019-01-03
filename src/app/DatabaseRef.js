@@ -5,7 +5,7 @@ import Nfc from 'nfc-react-web';
 const App = () => (
   <Nfc
     read={data => {
-      DatabaseRef.writeUserData(`Data read from tag: ${JSON.stringify(data)}`);
+      console.log(`Data read from tag: ${JSON.stringify(data)}`);
     }}
     timeout={15} // time to keep trying to read tags, in seconds
   ></Nfc>
@@ -48,6 +48,7 @@ class DatabaseRef extends Component {
     return(
       <div>
         <h1>Wilkommen!</h1>
+        <h3>{App}</h3>
         <button onClick={() => this.writeUserData('foo')}>Button 01</button>
         <button onClick={() => this.writeUserData('bar')}>Button 02</button>
         <button onClick={this.deleteData}>remove</button>
