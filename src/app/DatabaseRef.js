@@ -2,15 +2,6 @@ import React, { Component } from "react";
 import firebase from '../firebase';
 import Nfc from 'nfc-react-web';
 
-const App = () => (
-  <Nfc
-    read={data => {
-      console.log(`Data read from tag: ${JSON.stringify(data)}`);
-    }}
-    timeout={15} // time to keep trying to read tags, in seconds
-  ></Nfc>
-);
-
 class DatabaseRef extends Component {
   constructor(props) {
     super(props);
@@ -18,6 +9,7 @@ class DatabaseRef extends Component {
     this.writeUserData = this.writeUserData.bind(this);
     this.readUserData = this.readUserData.bind(this);
     this.deleteData = this.deleteData.bind(this);
+    this.readNFC = this.readNFC.bind(this);
   }
 
   writeUserData(nfcId){
@@ -42,7 +34,15 @@ class DatabaseRef extends Component {
       firebase.database().ref().remove();
   }
 
-
+  readNFC() {
+    return(
+    <Nfc
+      read={data => {
+        console.log(`Data read from tag: ${JSON.stringify(data)}`);
+      }}
+      timeout={15} // time to keep trying to read tags, in seconds
+    />)
+  }
 
   render() {
     return(
@@ -50,6 +50,7 @@ class DatabaseRef extends Component {
         <h1>Wilkommen!</h1>
         <button onClick={() => this.writeUserData('foo')}>Button 01</button>
         <button onClick={() => this.writeUserData('bar')}>Button 02</button>
+        <button onClick={() => this.writeUserData(this.readNFC)}>Read NFC tag and write to database</button>
         <button onClick={this.deleteData}>remove</button>
       </div>
     );

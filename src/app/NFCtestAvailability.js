@@ -71,7 +71,7 @@ class NFCtestAvailability extends Component {
     return(
       <div>
         <p>
-          <button class="btn btn-lg btn-default" onClick={this.readWriteNfc}>Test NFC Read/Write</button>
+          <button className="btn btn-lg btn-default" onClick={this.readWriteNfc}>Test NFC Read/Write</button>
         </p>
         <pre id="log" />
       </div>
