@@ -28,6 +28,14 @@ class DatabaseRef extends Component {
       });
   }
 
+  readWriteNfc() {
+  if ('nfc' in navigator) {
+    navigator.nfc.watch(function (message) {
+        consoleLog("NFC message received from Tag " + message.data);
+      }
+    }
+  }
+
   deleteData(){
       firebase.database().ref().remove();
   }
