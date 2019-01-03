@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import DatabaseRef from './app/DatabaseRef.js';
+import NFCtestAvailability from './app/NFCtestAvailability.js';
 
 class App extends Component {
   render() {
@@ -22,6 +23,7 @@ class App extends Component {
           </a>
         </header>
         <DatabaseRef />
+        <NFCtestAvailability />
       </div>
     );
   }
