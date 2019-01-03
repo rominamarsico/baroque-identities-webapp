@@ -33,13 +33,13 @@ class NFCtestAvailability extends Component {
 
   processMessage(message) {
     message.data.forEach(function (record) {
-      if (record.recordType == "string") {
+      if (record.recordType === "string") {
         this.consoleLog('Data is string: ' + record.data);
-      } else if (record.recordType == "json") {
+      } else if (record.recordType === "json") {
         this.processJSON(record.data);
-      } else if (record.recordType == "url") {
+      } else if (record.recordType === "url") {
         this.consoleLog("Data is URL: " + record.data);
-      } else if (record.recordType == "opaque" && record.mediaType == 'image/png') {
+      } else if (record.recordType === "opaque" && record.mediaType === 'image/png') {
         this.processPng(record.data);
       };
     });
@@ -71,7 +71,7 @@ class NFCtestAvailability extends Component {
     return(
       <div>
         <p>
-          <button class="btn btn-lg btn-default" onClick={this.readWriteNfc}>Test NFC Read/Write</button>
+          <button className="btn btn-lg btn-default" onClick={this.readWriteNfc}>Test NFC Read/Write</button>
         </p>
         <pre id="log" />
       </div>

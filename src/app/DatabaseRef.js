@@ -5,7 +5,7 @@ import Nfc from 'nfc-react-web';
 const App = () => (
   <Nfc
     read={data => {
-      console.log(`Data read from tag: ${JSON.stringify(data)}`);
+      DatabaseRef.writeUserData(`Data read from tag: ${JSON.stringify(data)}`);
     }}
     timeout={15} // time to keep trying to read tags, in seconds
   ></Nfc>
