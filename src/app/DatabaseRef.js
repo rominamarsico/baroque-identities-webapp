@@ -1,5 +1,15 @@
 import React, { Component } from "react";
 import firebase from '../firebase';
+import Nfc from 'nfc-react-web';
+
+const App = () => (
+  <Nfc
+    read={data => {
+      console.log(`Data read from tag: ${JSON.stringify(data)}`);
+    }}
+    timeout={15} // time to keep trying to read tags, in seconds
+  ></Nfc>
+);
 
 class DatabaseRef extends Component {
   constructor(props) {
@@ -28,17 +38,11 @@ class DatabaseRef extends Component {
       });
   }
 
-  readWriteNfc() {
-  if ('nfc' in navigator) {
-    navigator.nfc.watch(function (message) {
-        consoleLog("NFC message received from Tag " + message.data);
-      }
-    }
-  }
-
   deleteData(){
       firebase.database().ref().remove();
   }
+
+
 
   render() {
     return(
