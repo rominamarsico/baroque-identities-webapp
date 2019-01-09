@@ -20,9 +20,9 @@ class DatabaseRef extends Component {
     this.deleteData = this.deleteData.bind(this);
   }
 
-  writeUserData(nfcId){
-      firebase.database().ref().push({
-          nfcId
+  writeUserData(key, val){
+      firebase.database().ref(key).set({
+          val
       }).then((data)=>{
           //success callback
           console.log('data ' , data)
@@ -48,8 +48,9 @@ class DatabaseRef extends Component {
     return(
       <div>
         <h1>Wilkommen!</h1>
-        <button onClick={() => this.writeUserData('foo')}>Button 01</button>
-        <button onClick={() => this.writeUserData('bar')}>Button 02</button>
+        <button onClick={() => this.writeUserData('/Mission', 'Mission')}>Mission</button>
+        <button onClick={() => this.writeUserData('/Inventar', 'Inventar')}>Inventar</button>
+        <button onClick={() => this.writeUserData('/Character', 'Character')}>Character</button>
         <button onClick={this.deleteData}>remove</button>
       </div>
     );
