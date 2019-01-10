@@ -4,18 +4,14 @@ import Nfc from 'nfc-react-web';
 import firebase from '../firebase';
 import Button from './Button.js';
 
-const App = () => (
-  <Nfc
-    read={data => {
-      console.log(`Data read from tag: ${JSON.stringify(data)}`);
-    }}
-    timeout={15} // time to keep trying to read tags, in seconds
-  ></Nfc>
-);
-
 let missionCounter = 1;
 let inventoryCounter = 1;
 let characterCounter = 1;
+
+const Data = (data) => {
+  console.log(`Data read from tag: ${JSON.stringify(data)}`);
+  console.log(data[0].data);
+}
 
 export default class DatabaseRef extends Component {
   constructor(props) {
@@ -92,21 +88,21 @@ export default class DatabaseRef extends Component {
 
   showMission() {
     this.missionClickCounter();
-    this.setState({showInventory: false, showCharacter: false});
+    this.setState({showMission: true, showInventory: false, showCharacter: false});
     this.deleteData('/Inventar');
     this.deleteData('/Character');
   }
 
   showInventory() {
     this.inventoryClickCounter();
-    this.setState({showMission: false, showCharacter: false});
+    this.setState({showMission: false, showInventory: true, showCharacter: false});
     this.deleteData('/Mission');
     this.deleteData('/Character');
   }
 
   showCharacter() {
     this.characterClickCounter();
-    this.setState({showMission: false, showInventory: false});
+    this.setState({showMission: false, showInventory: false, showCharacter: true});
     this.deleteData('/Inventar');
     this.deleteData('/Mission');
   }
@@ -114,6 +110,10 @@ export default class DatabaseRef extends Component {
   render() {
     return(
       <div>
+        <Nfc
+          read={Data}
+          timeout={15} // time to keep trying to read tags, in seconds
+        />
         <Button
           text={'Mission'}
           onClick={this.showMission}
