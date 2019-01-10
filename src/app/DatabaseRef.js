@@ -1,6 +1,8 @@
 import React, { Component } from "react";
-import firebase from '../firebase';
 import Nfc from 'nfc-react-web';
+
+import firebase from '../firebase';
+import Button from './Button.js';
 
 const App = () => (
   <Nfc
@@ -11,50 +13,90 @@ const App = () => (
   ></Nfc>
 );
 
-class DatabaseRef extends Component {
+export default class DatabaseRef extends Component {
   constructor(props) {
     super(props);
-    this.state = { photoData: [] }; // <- set up react state
+    this.state = {
+      photoData: [],
+      showMission: false,
+      showInventory: false,
+      showCharacter: false
+    };
     this.writeUserData = this.writeUserData.bind(this);
-    this.readUserData = this.readUserData.bind(this);
+    //this.readUserData = this.readUserData.bind(this);
     this.deleteData = this.deleteData.bind(this);
+    this.showMission = this.showMission.bind(this);
+    this.showInventory = this.showInventory.bind(this);
+    this.showCharacter = this.showCharacter.bind(this);
   }
 
-  writeUserData(key, val){
-      firebase.database().ref(key).set({
-          val
-      }).then((data)=>{
-          //success callback
-          console.log('data ' , data)
-      }).catch((error)=>{
-          //error callback
-          console.log('error ' , error)
-      })
+  componentDidUpdate() {
+    if(this.state.showMission === true) {
+      console.log('mission');
+    } else if (this.state.showInventory === true) {
+      console.log('inventory');
+    } else if(this.state.showCharacter === true) {
+      console.log('character');
+    }
   }
 
-  readUserData() {
-      firebase.database().ref().once('value', function (snapshot) {
-          console.log(snapshot.val())
-      });
+  writeUserData(ref, val){
+    firebase.database().ref(ref).set({
+      val
+    }).then((data)=>{
+      //console.log('data ' , data)
+    }).catch((error)=>{
+      console.log('error ' , error)
+    })
   }
 
-  deleteData(){
-      firebase.database().ref().remove();
+  // readUserData() {
+  //     firebase.database().ref().once('value', function (snapshot) {
+  //         console.log(snapshot.val())
+  //     });
+  // }
+
+  deleteData(ref){
+    firebase.database().ref(ref).remove();
   }
 
+  showMission() {
+    this.setState({showMission: true, showInventory: false, showCharacter: false});
+    this.writeUserData('/Mission', 'Mission');
+    this.deleteData('/Inventar');
+    this.deleteData('/Character')
+  }
 
+  showInventory() {
+    this.setState({showMission: false, showInventory: true, showCharacter: false});
+    this.writeUserData('/Inventar', 'Inventar');
+    this.deleteData('/Mission');
+    this.deleteData('/Character')
+  }
+
+  showCharacter() {
+    this.setState({showMission: false, showInventory: false, showCharacter: true});
+    this.writeUserData('/Character', 'Character');
+    this.deleteData('/Inventar');
+    this.deleteData('/Mission')
+  }
 
   render() {
     return(
       <div>
-        <h1>Wilkommen!</h1>
-        <button onClick={() => this.writeUserData('/Mission', 'Mission')}>Mission</button>
-        <button onClick={() => this.writeUserData('/Inventar', 'Inventar')}>Inventar</button>
-        <button onClick={() => this.writeUserData('/Character', 'Character')}>Character</button>
-        <button onClick={this.deleteData}>remove</button>
+        <Button
+          text={'Mission'}
+          onClick={this.showMission}
+        />
+        <Button
+          text={'Inventar'}
+          onClick={this.showInventory}
+        />
+        <Button
+          text={'Character'}
+          onClick={this.showCharacter}
+        />
       </div>
     );
   }
 }
-
-export default DatabaseRef;

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import firebase from '../firebase';
 
 class NFCtestAvailability extends Component {
   constructor(props) {
@@ -33,13 +32,13 @@ class NFCtestAvailability extends Component {
 
   processMessage(message) {
     message.data.forEach(function (record) {
-      if (record.recordType == "string") {
+      if (record.recordType === "string") {
         this.consoleLog('Data is string: ' + record.data);
-      } else if (record.recordType == "json") {
+      } else if (record.recordType === "json") {
         this.processJSON(record.data);
-      } else if (record.recordType == "url") {
+      } else if (record.recordType === "url") {
         this.consoleLog("Data is URL: " + record.data);
-      } else if (record.recordType == "opaque" && record.mediaType == 'image/png') {
+      } else if (record.recordType === "opaque" && record.mediaType === 'image/png') {
         this.processPng(record.data);
       };
     });
@@ -60,10 +59,10 @@ class NFCtestAvailability extends Component {
           }
           this.processMessage(message);
         }, {mode: 'any'})
-        .then(() => this.consoleLog("Added a watch."))
+        .then(() => this.consoleLog("Your device suports NFC. YAY!"))
         .catch(err => this.consoleLog("Adding watch failed: " + err.name));
     } else {
-      this.consoleLog('NFC API not supported.');
+      this.consoleLog('Your device does not support NFC.');
     }
   }
 
@@ -71,7 +70,7 @@ class NFCtestAvailability extends Component {
     return(
       <div>
         <p>
-          <button class="btn btn-lg btn-default" onClick={this.readWriteNfc}>Test NFC Read/Write</button>
+          <button className="btn btn-lg btn-default" onClick={this.readWriteNfc}>Test NFC Reading</button>
         </p>
         <pre id="log" />
       </div>
