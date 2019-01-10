@@ -13,6 +13,10 @@ const App = () => (
   ></Nfc>
 );
 
+let missionCounter = 1;
+let inventoryCounter = 1;
+let characterCounter = 1;
+
 export default class DatabaseRef extends Component {
   constructor(props) {
     super(props);
@@ -28,16 +32,9 @@ export default class DatabaseRef extends Component {
     this.showMission = this.showMission.bind(this);
     this.showInventory = this.showInventory.bind(this);
     this.showCharacter = this.showCharacter.bind(this);
-  }
-
-  componentDidUpdate() {
-    if(this.state.showMission === true) {
-      console.log('mission');
-    } else if (this.state.showInventory === true) {
-      console.log('inventory');
-    } else if(this.state.showCharacter === true) {
-      console.log('character');
-    }
+    this.missionClickCounter = this.missionClickCounter.bind(this);
+    this.inventoryClickCounter = this.inventoryClickCounter.bind(this);
+    this.characterClickCounter = this.characterClickCounter.bind(this);
   }
 
   writeUserData(ref, val){
@@ -60,25 +57,58 @@ export default class DatabaseRef extends Component {
     firebase.database().ref(ref).remove();
   }
 
+  missionClickCounter() {
+    missionCounter++;
+    if(missionCounter % 2 === 0) {
+      this.setState({showMission: true});
+      this.writeUserData('/Mission', 'Mission');
+    } else {
+      this.setState({showMission: false});
+      this.deleteData('/Mission');
+    }
+  }
+
+  inventoryClickCounter() {
+    inventoryCounter++;
+    if(inventoryCounter % 2 === 0) {
+      this.setState({showInventory: true});
+      this.writeUserData('/Inventar', 'Inventar');
+    } else {
+      this.setState({showInventory: false});
+      this.deleteData('/Inventar');
+    }
+  }
+
+  characterClickCounter() {
+    characterCounter++;
+    if(characterCounter % 2 === 0) {
+      this.setState({showCharacter: true});
+      this.writeUserData('/Character', 'Character');
+    } else {
+      this.setState({showCharacter: false});
+      this.deleteData('/Character');
+    }
+  }
+
   showMission() {
-    this.setState({showMission: true, showInventory: false, showCharacter: false});
-    this.writeUserData('/Mission', 'Mission');
+    this.missionClickCounter();
+    this.setState({showInventory: false, showCharacter: false});
     this.deleteData('/Inventar');
-    this.deleteData('/Character')
+    this.deleteData('/Character');
   }
 
   showInventory() {
-    this.setState({showMission: false, showInventory: true, showCharacter: false});
-    this.writeUserData('/Inventar', 'Inventar');
+    this.inventoryClickCounter();
+    this.setState({showMission: false, showCharacter: false});
     this.deleteData('/Mission');
-    this.deleteData('/Character')
+    this.deleteData('/Character');
   }
 
   showCharacter() {
-    this.setState({showMission: false, showInventory: false, showCharacter: true});
-    this.writeUserData('/Character', 'Character');
+    this.characterClickCounter();
+    this.setState({showMission: false, showInventory: false});
     this.deleteData('/Inventar');
-    this.deleteData('/Mission')
+    this.deleteData('/Mission');
   }
 
   render() {

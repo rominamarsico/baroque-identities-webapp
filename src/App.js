@@ -11,7 +11,6 @@ class App extends Component {
           <h1>Baroque Identities</h1>
         </header>
         <DatabaseRef />
-        <NFCtestAvailability />
       </div>
     );
   }
