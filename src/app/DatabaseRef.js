@@ -8,11 +8,6 @@ let missionCounter = 1;
 let inventoryCounter = 1;
 let characterCounter = 1;
 
-const Data = (data) => {
-  console.log(`Data read from tag: ${JSON.stringify(data)}`);
-  console.log(data[0].data);
-}
-
 export default class DatabaseRef extends Component {
   constructor(props) {
     super(props);
@@ -20,7 +15,8 @@ export default class DatabaseRef extends Component {
       photoData: [],
       showMission: false,
       showInventory: false,
-      showCharacter: false
+      showCharacter: false,
+      nfcTag: ''
     };
     this.writeUserData = this.writeUserData.bind(this);
     //this.readUserData = this.readUserData.bind(this);
@@ -31,6 +27,7 @@ export default class DatabaseRef extends Component {
     this.missionClickCounter = this.missionClickCounter.bind(this);
     this.inventoryClickCounter = this.inventoryClickCounter.bind(this);
     this.characterClickCounter = this.characterClickCounter.bind(this);
+    this.readNfcData = this.readNfcData.bind(this);
   }
 
   writeUserData(ref, val){
@@ -41,6 +38,16 @@ export default class DatabaseRef extends Component {
     }).catch((error)=>{
       console.log('error ' , error)
     })
+  }
+
+  componentDidUpdate() {
+    this.writeUserData('/nfcTag', this.state.nfcTag);
+  }
+
+  readNfcData = (nfcData) => {
+    this.setState({ nfcTag: nfcData[0].data});
+    console.log('NFC Tag: ');
+    console.log(this.state.nfcTag);
   }
 
   // readUserData() {
@@ -118,7 +125,7 @@ export default class DatabaseRef extends Component {
       <div>
         {'nfc' in navigator
           ? <Nfc
-              read={Data}
+              read={this.readNfcData}
               timeout={15} // time to keep trying to read tags, in seconds
             />
           : null
