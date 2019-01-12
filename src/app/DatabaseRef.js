@@ -55,6 +55,8 @@ export default class DatabaseRef extends Component {
 
   missionClickCounter() {
     missionCounter++;
+    inventoryCounter = 1;
+    characterCounter = 1;
     if(missionCounter % 2 === 0) {
       this.setState({showMission: true});
       this.writeUserData('/Mission', 'Mission');
@@ -66,6 +68,8 @@ export default class DatabaseRef extends Component {
 
   inventoryClickCounter() {
     inventoryCounter++;
+    missionCounter = 1;
+    characterCounter = 1;
     if(inventoryCounter % 2 === 0) {
       this.setState({showInventory: true});
       this.writeUserData('/Inventar', 'Inventar');
@@ -77,6 +81,8 @@ export default class DatabaseRef extends Component {
 
   characterClickCounter() {
     characterCounter++;
+    missionCounter = 1;
+    inventoryCounter = 1;
     if(characterCounter % 2 === 0) {
       this.setState({showCharacter: true});
       this.writeUserData('/Character', 'Character');
