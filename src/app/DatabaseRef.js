@@ -110,10 +110,13 @@ export default class DatabaseRef extends Component {
   render() {
     return(
       <div>
-        <Nfc
-          read={Data}
-          timeout={15} // time to keep trying to read tags, in seconds
-        />
+        {'nfc' in navigator
+          ? <Nfc
+              read={Data}
+              timeout={15} // time to keep trying to read tags, in seconds
+            />
+          : null
+        }
         <Button
           text={'Mission'}
           onClick={this.showMission}

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import DatabaseRef from './app/DatabaseRef.js';
-import NFCtestAvailability from './app/NFCtestAvailability.js';
+// import NFCtestAvailability from './app/NFCtestAvailability.js';
 
 class App extends Component {
   render() {

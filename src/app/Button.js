@@ -4,14 +4,32 @@ import styled from 'styled-components';
 const MenuButton = styled.button`
   background: #660000;
   color: white;
-  width: 300px;
-  height: 150px;
   border: none;
   margin-bottom: 30px;
   font-size: 20px;
 
   :active {
     background-color: #660000ad;
+  }
+
+  :focus {
+    outline: none;
+  }
+
+  @media (min-height: 630px) {
+      height: 150px;
+  }
+
+  @media (max-height: 630px) {
+      height: 100px;
+  }
+
+  @media (min-width: 330px) {
+      width: 300px;
+  }
+
+  @media (max-width: 330px) {
+      width: 200px;
   }
 `;
 
