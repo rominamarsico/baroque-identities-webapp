@@ -28,6 +28,7 @@ export default class DatabaseRef extends Component {
     this.inventoryClickCounter = this.inventoryClickCounter.bind(this);
     this.characterClickCounter = this.characterClickCounter.bind(this);
     this.readNfcData = this.readNfcData.bind(this);
+    this.reloadPage = this.reloadPage.bind(this);
   }
 
   writeUserData(ref, val){
@@ -58,6 +59,10 @@ export default class DatabaseRef extends Component {
 
   deleteData(ref){
     firebase.database().ref(ref).remove();
+  }
+
+  reloadPage() {
+    window.location.reload();
   }
 
   missionClickCounter() {
@@ -127,6 +132,13 @@ export default class DatabaseRef extends Component {
           ? <Nfc
               read={this.readNfcData}
               timeout={15} // time to keep trying to read tags, in seconds
+            />
+          : null
+        }
+        {'nfc' in navigator
+          ? <Button
+              text={'Read NFC tag'}
+              onClick={this.reloadPage}
             />
           : null
         }

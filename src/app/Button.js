@@ -5,7 +5,8 @@ const MenuButton = styled.button`
   background: #660000;
   color: white;
   border: none;
-  margin-bottom: 30px;
+  margin-top: 15px;
+  margin-bottom: 15px;
   font-size: 20px;
 
   :active {
