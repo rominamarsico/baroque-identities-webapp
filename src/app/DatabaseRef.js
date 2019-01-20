@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Nfc from 'nfc-react-web';
+import styled from 'styled-components';
 
 import firebase from '../firebase';
 import Button from './Button.js';
@@ -7,6 +8,11 @@ import Button from './Button.js';
 let missionCounter = 1;
 let inventoryCounter = 1;
 let characterCounter = 1;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+`;
 
 export default class DatabaseRef extends Component {
   constructor(props) {
@@ -136,24 +142,43 @@ export default class DatabaseRef extends Component {
           : null
         }
         {'nfc' in navigator
-          ? <Button
-              text={'Read NFC tag'}
-              onClick={this.reloadPage}
-            />
-          : null
+          ? <div>
+              <ButtonWrapper>
+                <Button
+                  text={'Mission'}
+                  onClick={this.showMission}
+                />
+                <Button
+                  text={'Read NFC tag'}
+                  onClick={this.reloadPage}
+                />
+              </ButtonWrapper>
+              <ButtonWrapper>
+                <Button
+                  text={'Inventar'}
+                  onClick={this.showInventory}
+                />
+                <Button
+                  text={'Charaktere'}
+                  onClick={this.showCharacter}
+                />
+              </ButtonWrapper>
+            </div>
+          : <div>
+              <Button
+                text={'Mission'}
+                onClick={this.showMission}
+              />
+              <Button
+                text={'Inventar'}
+                onClick={this.showInventory}
+              />
+              <Button
+                text={'Charaktere'}
+                onClick={this.showCharacter}
+              />
+            </div>
         }
-        <Button
-          text={'Mission'}
-          onClick={this.showMission}
-        />
-        <Button
-          text={'Inventar'}
-          onClick={this.showInventory}
-        />
-        <Button
-          text={'Character'}
-          onClick={this.showCharacter}
-        />
       </div>
     );
   }

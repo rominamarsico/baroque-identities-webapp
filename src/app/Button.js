@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import styled from 'styled-components';
+import Nfc from 'nfc-react-web';
 
-const MenuButton = styled.button`
+const MenuButtonWithNfc = styled.button`
   background: #660000;
   color: white;
   border: none;
-  margin-top: 15px;
-  margin-bottom: 15px;
+  margin: 15px;
   font-size: 20px;
 
   :active {
@@ -17,20 +17,56 @@ const MenuButton = styled.button`
     outline: none;
   }
 
-  @media (min-height: 630px) {
-      height: 150px;
-  }
-
-  @media (max-height: 630px) {
-      height: 100px;
+  // newer mobile phones
+  @media (min-height: 550px) {
+      height: 140px;
   }
 
   @media (min-width: 330px) {
-      width: 300px;
+      width: 140px;
+  }
+
+  // older mobile phones
+  @media (max-height: 550px) {
+      height: 100px;
   }
 
   @media (max-width: 330px) {
-      width: 200px;
+      width: 120px;
+  }
+`;
+
+const MenuButtonNoNfc = styled.button`
+  background: #660000;
+  color: white;
+  border: none;
+  margin: 15px;
+  font-size: 20px;
+
+  :active {
+    background-color: #660000ad;
+  }
+
+  :focus {
+    outline: none;
+  }
+
+  // newer mobile phones
+  @media (min-height: 550px) {
+      height: 80px;
+  }
+
+  @media (min-width: 330px) {
+      width: 80%;
+  }
+
+  // older mobile phones
+  @media (max-height: 550px) {
+      height: 60px;
+  }
+
+  @media (max-width: 330px) {
+      width: 80%;
   }
 `;
 
@@ -41,9 +77,14 @@ export default class Button extends Component {
 
     return(
       <div>
-        <MenuButton onClick={onClick}>
-          {text}
-        </MenuButton>
+        {'nfc' in navigator
+          ? <MenuButtonWithNfc onClick={onClick} >
+              {text}
+            </MenuButtonWithNfc>
+          : <MenuButtonNoNfc onClick={onClick} >
+              {text}
+            </MenuButtonNoNfc>
+        }
       </div>
     );
   }
